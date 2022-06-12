@@ -2,6 +2,7 @@ import express, { Router } from "express";
 import { Users } from "../models/user.js";
 import { signup } from "../controllers/user/signup.js";
 import { login } from "./../controllers/user/login.js";
+import { verifyEmail } from "../controllers/user/verifyEmail.js";
 
 const router = Router();
 
@@ -17,5 +18,6 @@ router.get("/", async (req, res) => {
 
 router.post("/signup", signup);
 router.post("/login", login);
+router.post("/verify-email", verifyEmail);
 
 export { router as userRouter };

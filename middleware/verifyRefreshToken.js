@@ -10,13 +10,14 @@ export const verifyRefreshToken = async (req, res, next) => {
   try {
     const decode = jwt.verify(token, RefreshToken);
     req.user = decode;
+    next();
 
-    await redisClient.get(decode._id.toString(), (err, data) => {
-      if (err) throw err;
-      if (!data)
-        return res.status(401).send("No data in verifying Refresh Token");
-      next();
-    });
+    // await redisClient.get(decode._id.toString(), (err, data) => {
+    //   if (err) throw err;
+    //   if (data === null)
+    //     return res.status(401).send("No data in verifying Refresh Token");
+    //   next();
+    // });
     // next();
     // if (!data)
     //   return res.status(401).send("No data in verifying Refresh Token");

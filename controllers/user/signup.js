@@ -1,7 +1,10 @@
 import _ from "lodash";
 import asyncHandler from "express-async-handler";
 import bcrypt from "bcrypt";
+import OTPGenerator from "otp-generator";
 import { Users, validate } from "../../models/user.js";
+import { Verification } from "../../models/userVerification.js";
+import { emailOTPTemplate, mailTransport } from "../../utils/mail.js";
 
 export const signup = asyncHandler(async (req, res) => {
   const validated = await validate(req.body);
@@ -14,6 +17,30 @@ export const signup = asyncHandler(async (req, res) => {
   const hashed = await bcrypt.hash(user.password, salt);
   user.password = hashed;
 
+  let OTP = OTPGenerator.generate(6, {
+    digits: true,
+    lowerCaseAlphabets: false,
+    specialChars: false,
+    upperCaseAlphabets: false,
+  });
+
+  const verification = new Verification({
+    user: user._id,
+    otp: OTP,
+  });
+
+  verification.otp = await bcrypt.hash(verification.otp, salt);
+
+  await verification.save();
+  await user.save();
+
+  mailTransport.sendMail({
+    from: "security@techno.com",
+    to: user.email,
+    subject: "Verify your email",
+    html: emailOTPTemplate(OTP, user.name),
+  });
+
   const dataToSend = _.pick(user, [
     "name",
     "email",
@@ -21,9 +48,8 @@ export const signup = asyncHandler(async (req, res) => {
     "image",
     "countryCode",
     "phoneNumber",
+    "isVerified",
   ]);
-
-  await user.save();
 
   return res.status(200).send(dataToSend);
 });
