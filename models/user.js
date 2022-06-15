@@ -29,8 +29,8 @@ const userSchema = new mongoose.Schema({
     default: false,
   },
   image: {
-    url: { type: String },
-    id: { type: String },
+    type: String,
+    // required: true
   },
   date: {
     type: Date,
@@ -51,7 +51,7 @@ userSchema.methods.generateRefreshToken = function () {
 const Users = mongoose.model("Users", userSchema);
 
 const validate = (user) => {
-  const schema = yup.object().shape({
+  const schema = yup.object({
     name: yup.string().min(3).max(256),
     email: yup.string().email(),
     password: yup

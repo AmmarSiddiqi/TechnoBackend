@@ -11,4 +11,4 @@ router.get("/ch", async (req, res, next) => {
   return res.send("Checked");
 });
 
-export { router as checkRouter };
+export { router as checkRoute };

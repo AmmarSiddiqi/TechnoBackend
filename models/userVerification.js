@@ -27,7 +27,7 @@ verificationSchema.methods.compareOTP = async function (otp) {
 const Verification = mongoose.model("Verification", verificationSchema);
 
 const validate = (data) => {
-  const schema = yup.object().shape({
+  const schema = yup.object({
     userId: yup.string().required(),
     otp: yup.string().required().min(6).max(6),
   });

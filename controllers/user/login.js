@@ -11,7 +11,8 @@ export const login = asyncHandler(async (req, res) => {
   const user = await Users.findOne({ email });
   if (!user) return res.status(404).send("Invalid Email or Password");
 
-  const isValid = bcrypt.compare(password, user.password);
+  const isValid = await bcrypt.compare(password, user.password);
+  console.log(isValid);
   if (!isValid) return res.status(400).send("Invalid Password");
 
   const dataToSend = _.pick(user, [
