@@ -1,23 +1,19 @@
 import "./start/dotenv.js";
 import "./start/config.js";
+import cors from "cors";
 import express from "express";
-import "./start/db.js";
 import routes from "./start/routes.js";
+import "./start/db.js";
+
+const corsOptions = {
+  origin: "*",
+  credentials: true,
+  optionSuccessStatus: 200,
+};
 
 const app = express();
+app.use(cors(corsOptions));
 app.use(express.json());
-
-// process.on("uncaughtException", function (err) {
-//   console.log("Caught exception: ", err);
-// });
-
-// setTimeout(function () {
-//   console.log("This will still run.");
-// }, 500);
-
-// // Intentionally cause an exception, but don't catch it.
-// // nonexistentFunc();
-// console.log("This will not run.");
 
 routes(app);
 

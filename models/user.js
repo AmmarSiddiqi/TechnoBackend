@@ -18,9 +18,6 @@ const userSchema = new mongoose.Schema({
     min: 8,
     max: 1024,
   },
-  countryCode: {
-    type: String,
-  },
   phoneNumber: {
     type: Number,
   },
@@ -30,7 +27,6 @@ const userSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    // required: true
   },
   date: {
     type: Date,
@@ -54,12 +50,7 @@ const validate = (user) => {
   const schema = yup.object({
     name: yup.string().min(3).max(256),
     email: yup.string().email(),
-    password: yup
-      .string()
-      .min(6)
-      .max(15)
-      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/),
-    countryCode: yup.string().min(2).max(5),
+    password: yup.string().min(8).max(15),
     phoneNumber: yup.number().min(5, "number must be 7 digits long."),
   });
   return schema.validate(user);

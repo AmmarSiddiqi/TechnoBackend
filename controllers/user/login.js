@@ -18,6 +18,7 @@ export const login = asyncHandler(async (req, res) => {
   const dataToSend = _.pick(user, [
     "name",
     "email",
+    "_id",
     "date",
     "image",
     "isVerified",

@@ -42,6 +42,7 @@ export const signup = asyncHandler(async (req, res) => {
   });
 
   const dataToSend = _.pick(user, [
+    "_id",
     "name",
     "email",
     "date",

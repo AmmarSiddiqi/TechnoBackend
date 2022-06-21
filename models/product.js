@@ -27,7 +27,7 @@ const productSchema = new schema({
     required: true,
   },
   image: {
-    type: Array,
+    type: String,
     required: true,
   },
   category: { type: String, required: true },
@@ -51,6 +51,7 @@ const validate = (product) => {
     description: yup.string().min(6).max(999).required(),
     price: yup.number().required(),
     category: yup.string().required(),
+    image: yup.string().required(),
     subCategory: yup.string().required(),
   });
   return schema.validate(product);

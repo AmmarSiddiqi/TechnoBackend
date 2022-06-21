@@ -5,24 +5,24 @@ import { cloudinary } from "../../utils/cloudinary.js";
 export const addProduct = asyncHandler(async (req, res) => {
   const validated = await validate(req.body);
 
-  let imagesData = [];
+  // let imagesData = [];
 
-  const files = req.files;
-  console.log(files);
+  // const files = req.files;
+  // console.log(files);
 
-  for (let file of files) {
-    const uploader = await cloudinary.uploader.upload(file.path, {
-      folder: `TechnoMarketplace/Products`,
-    });
-    imagesData.push(uploader.secure_url);
-  }
+  // for (let file of files) {
+  //   const uploader = await cloudinary.uploader.upload(file.path, {
+  //     folder: `TechnoMarketplace/Products`,
+  //   });
+  //   imagesData.push(uploader.secure_url);
+  // }
 
   // const result = await cloudinary.uploader.upload(req.files.path, {
   //   folder: `TechnoMarketplace/Products`,
   // });
 
   const product = new Products(validated);
-  product.image = imagesData;
+  // product.image = imagesData;
 
   await product.save();
 

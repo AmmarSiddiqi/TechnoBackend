@@ -3,7 +3,6 @@ import { addProduct } from "../controllers/product/addProduct.js";
 import { deleteProduct } from "../controllers/product/deleteProduct.js";
 import { getAllProducts } from "../controllers/product/getAllProducts.js";
 import { getProduct } from "../controllers/product/getProduct.js";
-import upload from "../utils/multer.js";
 import { auth } from "../middleware/auth.js";
 
 const router = express.Router();
@@ -17,7 +16,7 @@ router.get("/", getAllProducts);
 
 router.get("/:id", getProduct);
 
-router.post("/add", upload.array("image", 6), addProduct);
+router.post("/add", /* upload.array("image", 6), */ addProduct);
 
 router.delete("/delete/:id", auth, deleteProduct);
 
