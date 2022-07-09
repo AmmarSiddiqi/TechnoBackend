@@ -30,7 +30,8 @@ export const login = asyncHandler(async (req, res) => {
   const refreshToken = user.generateRefreshToken();
 
   return res
+    .status(200)
     .header("x-auth-token", token)
-    .header("x-refresh-token", refreshToken)
+    .header("access-control-expose-headers", "x-auth-token")
     .send(dataToSend);
 });

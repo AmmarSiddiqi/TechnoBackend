@@ -17,6 +17,8 @@ export const signup = asyncHandler(async (req, res) => {
   const hashed = await bcrypt.hash(user.password, salt);
   user.password = hashed;
 
+  const token = user.generateAuthToken();
+
   let OTP = OTPGenerator.generate(6, {
     digits: true,
     lowerCaseAlphabets: false,
@@ -52,5 +54,9 @@ export const signup = asyncHandler(async (req, res) => {
     "isVerified",
   ]);
 
-  return res.status(200).send(dataToSend);
+  return res
+    .status(200)
+    .header("x-auth-token", token)
+    .header("access-control-expose-headers", "x-auth-token")
+    .send(dataToSend);
 });

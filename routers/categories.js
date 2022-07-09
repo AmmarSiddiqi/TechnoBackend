@@ -4,6 +4,11 @@ import { getCategories } from "./../controllers/category/getCategories.js";
 
 const router = express.Router();
 
+router.use((req, res, next) => {
+  console.log(`${req.url} @ ${Date.now()}`);
+  next();
+});
+
 router.get("/", getCategories);
 
 router.post("/", postCategories);

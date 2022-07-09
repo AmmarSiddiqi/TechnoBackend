@@ -25,6 +25,6 @@ router.post("/login", login);
 router.post("/verify-email", verifyEmail);
 router.get("/profile/:id", profile);
 router.post("/profile/changePassword/:id", changePassword);
-router.put("/profile/update", upload.single("image"), profileUpdate);
+router.put("/profile/update", /*upload.single("image"),*/ profileUpdate);
 
 export { router as userRoute };

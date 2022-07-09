@@ -35,7 +35,18 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.methods.generateAuthToken = function () {
-  const token = jwt.sign({ _id: this._id }, AccessToken, { expiresIn: "7d" });
+  const token = jwt.sign(
+    {
+      _id: this._id,
+      name: this.name,
+      email: this.email,
+      phone: this.phoneNumber,
+      image: this.image,
+      isVerified: this.isVerified,
+    },
+    AccessToken,
+    { expiresIn: "7d" }
+  );
   return token;
 };
 
@@ -51,7 +62,7 @@ const validate = (user) => {
     name: yup.string().min(3).max(256),
     email: yup.string().email(),
     password: yup.string().min(8).max(15),
-    phoneNumber: yup.number().min(5, "number must be 7 digits long."),
+    phoneNumber: yup.number().min(7, "number must be 7 digits long."),
   });
   return schema.validate(user);
 };
